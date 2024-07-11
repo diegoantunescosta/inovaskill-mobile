@@ -133,13 +133,14 @@ Future<Map<String, dynamic>> fetchData() async {
                       },
                       child: _buildQuickAccessButton('Equipamentos', Icons.build),
                     );
-
-
                     } else if (index == 1) {
                       return TextButton(
-                          onPressed: () {
-                            _showCotacaoPopup(context);
-                          },
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => GraphScreen()),
+                        );
+                      },
                           child: _buildQuickAccessButton('Estatísticas operacionais', Icons.bar_chart));
                     } else if (index == 2) {
                       return TextButton(

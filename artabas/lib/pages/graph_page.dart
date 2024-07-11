@@ -110,7 +110,7 @@ class PrevistoVsRealRacaoChart extends StatelessWidget {
 }
 
 Future<String> fetchData() async {
-  final response = await http.get(Uri.parse('http://127.0.0.1:5000/getData'));
+  final response = await http.get(Uri.parse('https://apicotacaoovos.onrender.com/getData'));
   return response.body;
 }
 
