@@ -1,3 +1,4 @@
+import 'package:artabas/pages/graph_page.dart';
 import 'package:artabas/widgets/cotacao_popup.dart';
 import 'package:artabas/widgets/recurso_popup.dart';
 import 'package:artabas/widgets/settings_sheet.dart';
@@ -123,11 +124,23 @@ Future<Map<String, dynamic>> fetchData() async {
                   itemCount: 4,
                   itemBuilder: (context, index) {
                     if (index == 0) {
-                      return _buildQuickAccessButton(
-                          'Equipamentos', Icons.build);
+                    return TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => GraphScreen()),
+                        );
+                      },
+                      child: _buildQuickAccessButton('Equipamentos', Icons.build),
+                    );
+
+
                     } else if (index == 1) {
-                      return _buildQuickAccessButton(
-                          'Estatísticas operacionais', Icons.bar_chart);
+                      return TextButton(
+                          onPressed: () {
+                            _showCotacaoPopup(context);
+                          },
+                          child: _buildQuickAccessButton('Estatísticas operacionais', Icons.bar_chart));
                     } else if (index == 2) {
                       return TextButton(
                         onPressed: () {
