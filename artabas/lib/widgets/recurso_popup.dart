@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 Future<Map<String, dynamic>> fetchData() async {
   final response = await http.get(
-      Uri.parse('https://apicotacaoovos.onrender.com/api/eggs_online'));
+      Uri.parse('http://213.199.37.135:5000/api/eggs_online'));
 
   if (response.statusCode == 200) {
     return jsonDecode(response.body);

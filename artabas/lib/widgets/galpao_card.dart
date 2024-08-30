@@ -6,19 +6,26 @@ class GalpaoCard extends StatelessWidget {
   final String agua;
   final String alimentacao;
   final String updatedAt;
+  final Color color;
+  final IconData icon;
+  final VoidCallback onPressedSettings;
 
-  GalpaoCard({
+  const GalpaoCard({
     required this.title,
     required this.temperatura,
     required this.agua,
     required this.alimentacao,
     required this.updatedAt,
+    required this.color,
+    required this.icon,
+    required this.onPressedSettings,
+    super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.red[50],
+      color: color,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
@@ -26,43 +33,43 @@ class GalpaoCard extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Row(
           children: [
-            Icon(Icons.warning, color: Colors.red),
-            SizedBox(width: 10),
+            Icon(icon, color: Colors.black),
+            const SizedBox(width: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Text(
                   'Temperatura ($temperatura)',
-                  style: TextStyle(color: Colors.red),
+                  style: const TextStyle(color: Colors.black),
                 ),
                 Text(
                   'Água ($agua)',
-                  style: TextStyle(color: Colors.red),
+                  style: const TextStyle(color: Colors.black),
                 ),
                 Text(
                   'Alimentação ($alimentacao)',
-                  style: TextStyle(color: Colors.red),
+                  style: const TextStyle(color: Colors.black),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Text(
                   'Atualizado em: $updatedAt',
-                  style: TextStyle(color: Colors.grey),
+                  style: const TextStyle(color: Colors.grey),
                 ),
               ],
             ),
-            Spacer(),
+            const Spacer(),
             IconButton(
-              icon: Icon(Icons.settings, color: Colors.grey),
-              onPressed: () {}, // Implementação da função de configurações
+              icon: const Icon(Icons.settings, color: Colors.grey),
+              onPressed: onPressedSettings,
             ),
           ],
         ),

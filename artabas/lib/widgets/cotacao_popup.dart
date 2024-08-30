@@ -30,7 +30,7 @@ class _CotacaoPopupState extends State<CotacaoPopup> {
   Future<void> fetchData() async {
     String lastBusinessDay = getLastBusinessDay();
     final response = await http.get(Uri.parse(
-        'https://apicotacaoovos.onrender.com/api/egg-prices?date=$lastBusinessDay'));
+        'http://213.199.37.135:5000/api/egg-prices?date=$lastBusinessDay'));
 
     if (response.statusCode == 200) {
       List<dynamic> jsonData = jsonDecode(response.body);
