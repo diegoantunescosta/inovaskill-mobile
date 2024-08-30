@@ -1,19 +1,26 @@
-import 'dart:convert';
 import 'package:artabas/flutterflow/aviario.dart';
 import 'package:artabas/flutterflow/climatizacao.dart';
 import 'package:artabas/flutterflow/smaai.dart';
-import 'package:artabas/pages/login_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:artabas/pages/graph_page.dart';
-import 'package:artabas/widgets/cotacao_popup.dart';
-import 'package:artabas/widgets/recurso_popup.dart';
+import 'package:artabas/widgets/recurso_popup.dart'; // Certifique-se de que o widget está importado corretamente
+import 'package:artabas/widgets/cotacao_popup.dart'; // Certifique-se de que o widget está importado corretamente
 import 'package:artabas/widgets/settings_sheet.dart';
 import 'package:artabas/widgets/quick_access_button.dart';
 import 'package:artabas/widgets/galpao_card.dart';
+import 'package:artabas/pages/login_screen.dart';
+import 'package:artabas/pages/graph_page.dart';
+import 'package:artabas/pages/aviario_screen.dart';
+import 'package:artabas/pages/climatizacao_detalhes_page.dart';
 
 class DashboardPage extends StatelessWidget {
-  const DashboardPage({Key? key});
+  final String keywhats; // Renomeie a chave para evitar conflitos com o widget Key
+  final String number;
+
+  const DashboardPage({
+    Key? key,
+    required this.keywhats,
+    required this.number,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +65,8 @@ class DashboardPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Nome Granja',
+             Text(
+                number, 
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -148,7 +155,7 @@ class DashboardPage extends StatelessWidget {
                     } else if (index == 3) {
                       return TextButton(
                         onPressed: () {
-                          _showPopup(context);
+                          _showRecursoPopup(context);
                         },
                         child: QuickAccessButton(
                           label: 'Recurso',
@@ -158,7 +165,7 @@ class DashboardPage extends StatelessWidget {
                     } else if (index == 4) {
                       return TextButton(
                         onPressed: () {
-                          _showCotacaoPopup(context);
+                          _showCotacaoPopup(context); 
                         },
                         child: QuickAccessButton(
                           label: 'Cotação',
@@ -181,7 +188,6 @@ class DashboardPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-              // Container com ListView para os cards de dispositivos
               Container(
                 height: MediaQuery.of(context).size.height - 380, // Altura ajustável conforme necessário
                 child: ListView(
@@ -268,7 +274,6 @@ class DashboardPage extends StatelessWidget {
       ),
     );
   }
-
   void _showSettingsSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -298,8 +303,14 @@ class DashboardPage extends StatelessWidget {
     );
   }
 
-  void _showPopup(BuildContext context) {
-    showPopup(context);
+
+  void _showRecursoPopup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return RecursoPopup();
+      },
+    );
   }
 
   void _showCotacaoPopup(BuildContext context) {

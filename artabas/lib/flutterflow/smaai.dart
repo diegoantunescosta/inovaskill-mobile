@@ -8,15 +8,6 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: AuthenticZap(),
-    );
-  }
-}
-
 class LoginSmaai extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

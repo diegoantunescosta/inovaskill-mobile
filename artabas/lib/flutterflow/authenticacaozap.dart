@@ -1,5 +1,6 @@
+import 'dart:convert';
+
 import 'package:artabas/flutterflow/dashboard_page.dart';
-import 'package:artabas/flutterflow/smaai.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'shared_preferences.dart'; // Importe o helper
@@ -12,12 +13,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: AuthenticZap(),
+      home: AuthenticZap(number: '', key: UniqueKey()), // Inicialize com um valor padrão ou vazio
     );
   }
 }
 
 class AuthenticZap extends StatefulWidget {
+  final String number;
+
+  AuthenticZap({Key? key, required this.number}) : super(key: key);
+
   @override
   _AuthenticZapState createState() => _AuthenticZapState();
 }
@@ -29,7 +34,7 @@ class _AuthenticZapState extends State<AuthenticZap> {
 
   Future<void> _checkKey() async {
     final key = _keyController.text;
-    final url = Uri.parse('http://172.18.1.215:5000/get_number_by_key?key=$key');
+    final url = Uri.parse('https://e2d9w1aprk.execute-api.us-east-1.amazonaws.com/dev/get_number_by_key?key=$key');
 
     setState(() {
       _isLoading = true;
@@ -40,11 +45,18 @@ class _AuthenticZapState extends State<AuthenticZap> {
       final response = await http.get(url);
 
       if (response.statusCode == 200) {
+        // Supondo que o número seja retornado na resposta
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        final String number = data['number'];
+
         // Salve a chave no SharedPreferences
         await SharedPrefsHelper.saveUserKey(key);
+
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => DashboardPage()),
+          MaterialPageRoute(
+            builder: (context) => DashboardPage(keywhats: key, number: number),
+          ),
         );
       } else {
         setState(() {
@@ -62,6 +74,7 @@ class _AuthenticZapState extends State<AuthenticZap> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +85,7 @@ class _AuthenticZapState extends State<AuthenticZap> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            // // Logo
+            // Logo
             // Image.asset(
             //   'assets/images/image_3-sem fundo.png', // substitua pelo caminho do seu ativo de imagem
             //   height: 150,
@@ -151,18 +164,18 @@ class _AuthenticZapState extends State<AuthenticZap> {
                       ),
                     ),
             ),
-            if (_errorMessage.isNotEmpty) ...[
-              SizedBox(height: 10),
-              Text(
-                _errorMessage,
-                style: TextStyle(color: Colors.red, fontSize: 16),
-                textAlign: TextAlign.center,
+            if (_errorMessage.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: Text(
+                  _errorMessage,
+                  style: TextStyle(color: Colors.red, fontSize: 16),
+                  textAlign: TextAlign.center,
+                ),
               ),
-            ],
           ],
         ),
       ),
     );
   }
 }
-

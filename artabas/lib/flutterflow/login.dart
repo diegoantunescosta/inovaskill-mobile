@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     // Configuração da requisição
-    final url = Uri.parse('http://172.18.1.215:5000/add_number');
+    final url = Uri.parse('https://e2d9w1aprk.execute-api.us-east-1.amazonaws.com/dev/add_number');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
@@ -63,10 +63,12 @@ class _LoginPageState extends State<LoginPage> {
         SnackBar(content: Text('Número enviado com sucesso!')),
       );
       
-      // Navega para a próxima página
+      // Navega para a próxima página passando o número
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => AuthenticZap()),
+        MaterialPageRoute(
+          builder: (context) => AuthenticZap(number: formattedNumber, key: UniqueKey()),
+        ),
       );
     } else {
       // Erro

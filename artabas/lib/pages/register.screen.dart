@@ -106,10 +106,10 @@ class _RegisterPageState extends State<RegisterPage> {
         );
 
         if (loginResponse.statusCode == 200) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => DashboardPage()),
-          );
+         // Navigator.pushReplacement(
+           // context,
+      //      MaterialPageRoute(builder: (context) => DashboardPage()),
+        //  );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
