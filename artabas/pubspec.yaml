@@ -39,6 +39,7 @@ dependencies:
   intl: ^0.17.0
   flutter_hooks: ^0.18.0
   shared_preferences: ^2.0.13
+  multi_select_flutter: ^4.0.0
   
 
 
@@ -81,11 +82,11 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+    - assets/images/image_3-sem fundo.png
+    - assets/images/OIG4.Ptkzg.jpeg
+    - assets/images/ciag.png
 
-  # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

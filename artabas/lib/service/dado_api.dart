@@ -16,9 +16,9 @@ class DadoAPI {
   factory DadoAPI.fromJson(Map<String, dynamic> json) {
     return DadoAPI(
       data: json['Data'],
-      preco: json['Preco (R\$\/30 dz)'],
-      regiaoTipo: json['Regiao\/Tipo'],
-      variacaoSemana: json['Variacao\/Semana (%)'],
+      preco: json['Preco (R\$/30 dz)'],
+      regiaoTipo: json['Regiao/Tipo'],
+      variacaoSemana: json['Variacao/Semana (%)'],
     );
   }
 }

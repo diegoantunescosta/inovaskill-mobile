@@ -6,6 +6,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,6 +17,8 @@ class MyApp extends StatelessWidget {
 }
 
 class AviaryScreen extends StatelessWidget {
+  const AviaryScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +26,7 @@ class AviaryScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.red,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             // Add your back button action here
           },
@@ -34,8 +38,8 @@ class AviaryScreen extends StatelessWidget {
             Container(
               color: Colors.red,
               width: double.infinity,
-              padding: EdgeInsets.symmetric(vertical: 20.0),
-              child: Text(
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              child: const Text(
                 'Adicione um aviário',
                 style: TextStyle(
                   color: Colors.white,
@@ -46,32 +50,32 @@ class AviaryScreen extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Aviário',
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 20),
-                  TextField(
+                  const SizedBox(height: 20),
+                  const TextField(
                     decoration: InputDecoration(
                       labelText: 'Identificador do aviário',
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  SizedBox(height: 10),
-                  TextField(
+                  const SizedBox(height: 10),
+                  const TextField(
                     decoration: InputDecoration(
                       labelText: 'Data de início',
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
                           Navigator.push(
@@ -83,9 +87,9 @@ class AviaryScreen extends StatelessWidget {
                         },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
-                      minimumSize: Size(double.infinity, 50),
+                      minimumSize: const Size(double.infinity, 50),
                     ),
-                    child: Text(
+                    child: const Text(
                       'Próximo',
                       style: TextStyle(fontSize: 18),
                     ),

@@ -4,7 +4,7 @@ class QuickAccessButton extends StatelessWidget {
   final String label;
   final IconData icon;
 
-  const QuickAccessButton({required this.label, required this.icon, super.key});
+  const QuickAccessButton({required this.label, required this.icon, super.key, required Null Function() onPressed});
 
   @override
   Widget build(BuildContext context) {

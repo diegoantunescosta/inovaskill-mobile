@@ -1,8 +1,6 @@
-import 'package:artabas/flutterflow/smaai.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'shared_preferences.dart'; // Importe o helper para salvar dados no SharedPreferences
-// Importa a página do Dashboard
 
 void main() {
   runApp(MyApp());
@@ -48,7 +46,7 @@ class _AuthenticZapState extends State<AuthenticZap> {
         await SharedPrefsHelper.saveUserKey(key);
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => LoginSmaai()),
+          MaterialPageRoute(builder: (context) => MyHomePage()),
         );
       } else {
         setState(() {
@@ -189,5 +187,97 @@ class _AuthenticZapState extends State<AuthenticZap> {
         ),
       ),
     );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  final List<Widget> _pages = <Widget>[
+    DashboardPage(), // Substitua com a página que você deseja
+    ProfilePage(),   // Substitua com a página que você deseja
+    MessagesPage(),  // Substitua com a página que você deseja
+    SettingsPage(),  // Substitua com a página que você deseja
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _pages[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.dashboard),
+            label: 'Dashboard',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Perfil',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.message),
+            label: 'Mensagens',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Configurações',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.redAccent,
+        unselectedItemColor: Colors.black54,
+        onTap: _onItemTapped,
+      ),
+    );
+  }
+}
+
+// Substitua com suas páginas reais
+class DashboardPage extends StatelessWidget {
+  const DashboardPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: Text('Página do Dashboard'));
+  }
+}
+
+class ProfilePage extends StatelessWidget {
+  const ProfilePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: Text('Página de Perfil'));
+  }
+}
+
+class MessagesPage extends StatelessWidget {
+  const MessagesPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: Text('Página de Mensagens'));
+  }
+}
+
+class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: Text('Página de Configurações'));
   }
 }

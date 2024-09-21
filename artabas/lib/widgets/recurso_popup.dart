@@ -20,7 +20,7 @@ void showPopup(BuildContext context) async {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Dados da API'),
+        title: const Text('Dados da API'),
         content: SingleChildScrollView(
           child: SizedBox(
             width: double.maxFinite,
@@ -35,7 +35,7 @@ void showPopup(BuildContext context) async {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   elevation: 3,
-                  margin: EdgeInsets.symmetric(vertical: 10),
+                  margin: const EdgeInsets.symmetric(vertical: 10),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -43,13 +43,13 @@ void showPopup(BuildContext context) async {
                       children: [
                         Text(
                           key,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                           ),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: items.map((item) {
@@ -58,29 +58,29 @@ void showPopup(BuildContext context) async {
                               children: [
                                 Text(
                                   'Período: ${item['Periodo']}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 16,
                                     color: Colors.black87,
                                   ),
                                 ),
-                                SizedBox(height: 4),
+                                const SizedBox(height: 4),
                                 Row(
                                   children: [
-                                    Text(
+                                    const Text(
                                       '💵',
                                       style: TextStyle(fontSize: 16),
                                     ),
-                                    SizedBox(width: 4),
+                                    const SizedBox(width: 4),
                                     Text(
                                       'Câmbio: ${item['Cambio']}, Preço: ${item['preco'] ?? item['Dolar']}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 14,
                                         color: Colors.black54,
                                       ),
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 8),
+                                const SizedBox(height: 8),
                               ],
                             );
                           }).toList(),
@@ -98,7 +98,7 @@ void showPopup(BuildContext context) async {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text('Fechar'),
+            child: const Text('Fechar'),
           ),
         ],
       );

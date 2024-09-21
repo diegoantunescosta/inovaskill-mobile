@@ -7,6 +7,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,6 +18,8 @@ class MyApp extends StatelessWidget {
 }
 
 class ClimatizacaoDetalhesPage extends StatefulWidget {
+  const ClimatizacaoDetalhesPage({super.key});
+
   @override
   _ClimatizacaoDetalhesPageState createState() => _ClimatizacaoDetalhesPageState();
 }
@@ -48,7 +52,7 @@ class _ClimatizacaoDetalhesPageState extends State<ClimatizacaoDetalhesPage> {
         backgroundColor: Colors.red,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context); // Navega para a página anterior
           },
@@ -61,7 +65,7 @@ class _ClimatizacaoDetalhesPageState extends State<ClimatizacaoDetalhesPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             // Título
-            Text(
+            const Text(
               'Climatização',
               style: TextStyle(
                 fontSize: 30,
@@ -70,10 +74,10 @@ class _ClimatizacaoDetalhesPageState extends State<ClimatizacaoDetalhesPage> {
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
 
             // Subtítulo (Identificador aviário)
-            Text(
+            const Text(
               'Identificador aviário',
               style: TextStyle(
                 fontSize: 18,
@@ -81,11 +85,11 @@ class _ClimatizacaoDetalhesPageState extends State<ClimatizacaoDetalhesPage> {
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             // Linha Separadora
-            Divider(thickness: 1, color: Colors.black26),
-            SizedBox(height: 10),
+            const Divider(thickness: 1, color: Colors.black26),
+            const SizedBox(height: 10),
 
             // Line Chart Placeholder
             Container(
@@ -97,18 +101,18 @@ class _ClimatizacaoDetalhesPageState extends State<ClimatizacaoDetalhesPage> {
                   lineBarsData: [
                     LineChartBarData(
                       spots: [
-                        FlSpot(0, 25),
-                        FlSpot(1, 27),
-                        FlSpot(2, 24),
-                        FlSpot(3, 26),
-                        FlSpot(4, 28),
-                        FlSpot(5, 29),
-                        FlSpot(6, 30),
+                        const FlSpot(0, 25),
+                        const FlSpot(1, 27),
+                        const FlSpot(2, 24),
+                        const FlSpot(3, 26),
+                        const FlSpot(4, 28),
+                        const FlSpot(5, 29),
+                        const FlSpot(6, 30),
                       ],
                       isCurved: true,
                       color: Colors.red,
                       barWidth: 3,
-                      dotData: FlDotData(show: false),
+                      dotData: const FlDotData(show: false),
                     ),
                   ],
                   titlesData: FlTitlesData(
@@ -118,7 +122,7 @@ class _ClimatizacaoDetalhesPageState extends State<ClimatizacaoDetalhesPage> {
                         getTitlesWidget: (value, meta) {
                           return Text(
                             '${value.toInt()}°C',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.black54,
                               fontSize: 12,
                             ),
@@ -136,7 +140,7 @@ class _ClimatizacaoDetalhesPageState extends State<ClimatizacaoDetalhesPage> {
                           ];
                           return Text(
                             days[value.toInt()],
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.black54,
                               fontSize: 12,
                             ),
@@ -146,30 +150,18 @@ class _ClimatizacaoDetalhesPageState extends State<ClimatizacaoDetalhesPage> {
                       ),
                     ),
                   ),
-                  gridData: FlGridData(show: true),
+                  gridData: const FlGridData(show: true),
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Exaustores Row
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Exaustores'),
+                const Text('Exaustores'),
                 ToggleButtons(
-                  children: [
-                    Container(
-                      width: 100,
-                      alignment: Alignment.center,
-                      child: Text('Desligado'),
-                    ),
-                    Container(
-                      width: 100,
-                      alignment: Alignment.center,
-                      child: Text('Ligado'),
-                    ),
-                  ],
                   isSelected: [!exaustoresLigado, exaustoresLigado],
                   onPressed: (index) {
                     setState(() {
@@ -180,17 +172,6 @@ class _ClimatizacaoDetalhesPageState extends State<ClimatizacaoDetalhesPage> {
                   selectedColor: Colors.white,
                   fillColor: Colors.red,
                   borderRadius: BorderRadius.circular(10),
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-
-            // Exemplo2 Row
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Exemplo2'),
-                ToggleButtons(
                   children: [
                     Container(
                       width: 100,
@@ -203,6 +184,17 @@ class _ClimatizacaoDetalhesPageState extends State<ClimatizacaoDetalhesPage> {
                       child: Text('Ligado'),
                     ),
                   ],
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+
+            // Exemplo2 Row
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Exemplo2'),
+                ToggleButtons(
                   isSelected: [!exemplo2Ligado, exemplo2Ligado],
                   onPressed: (index) {
                     setState(() {
@@ -213,13 +205,25 @@ class _ClimatizacaoDetalhesPageState extends State<ClimatizacaoDetalhesPage> {
                   selectedColor: Colors.white,
                   fillColor: Colors.red,
                   borderRadius: BorderRadius.circular(10),
+                  children: [
+                    Container(
+                      width: 100,
+                      alignment: Alignment.center,
+                      child: Text('Desligado'),
+                    ),
+                    Container(
+                      width: 100,
+                      alignment: Alignment.center,
+                      child: Text('Ligado'),
+                    ),
+                  ],
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Luz Slider
-            Text('Luz'),
+            const Text('Luz'),
             Slider(
               value: luzValue,
               onChanged: (newValue) {

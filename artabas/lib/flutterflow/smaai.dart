@@ -1,140 +1,189 @@
-import 'package:artabas/flutterflow/authenticacaozap.dart';
-import 'package:artabas/flutterflow/smaai.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'shared_preferences.dart'; // Importe o helper para SharedPreferences
+import 'dart:convert'; // Para converter a resposta em JSON
+import 'products_page.dart'; // Importa o widget ProductsPage
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: AuthenticZap(),
+      home: LoginSmaai(),
     );
   }
 }
 
-class LoginSmaai extends StatelessWidget {
+class LoginSmaai extends StatefulWidget {
+  const LoginSmaai({super.key});
+
+  @override
+  _LoginSmaaiState createState() => _LoginSmaaiState();
+}
+
+class _LoginSmaaiState extends State<LoginSmaai> {
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _isLoading = false; // Indicador de carregamento
+
+  Future<void> _login() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    final response = await http.post(
+      Uri.parse('https://osm2ll72f4.execute-api.us-east-1.amazonaws.com/dev/api/login'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'username': _usernameController.text,
+        'password': _passwordController.text,
+      }),
+    );
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProductsPage(
+            products: data['products'],
+            tokenAuth: data['token_auth'],
+          ),
+        ),
+      );
+    } else {
+      // Exibe um diálogo em caso de erro
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Erro'),
+          content: const Text('Falha ao fazer login.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<String?>(
-      future: SharedPrefsHelper.getUserKey(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.red, // Red app bar as in the image
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.redAccent,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: const Text(''),
+      ),
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(height: 20),
+              // Título principal
+              const Text(
+                'Integração',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+                textAlign: TextAlign.center,
               ),
-              title: Text('Climatização'),
-            ),
-            body: Center(child: CircularProgressIndicator()),
-          );
-        } else if (snapshot.hasError) {
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.red,
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+              const SizedBox(height: 10),
+              // Subtítulo
+              const Text(
+                'Importação de dados',
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.redAccent,
+                ),
+                textAlign: TextAlign.center,
               ),
-              title: Text('Climatização'),
-            ),
-            body: Center(child: Text('Erro ao carregar chave')),
-          );
-        } else {
-          final key = snapshot.data ?? 'Chave não encontrada';
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.red,
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+              const SizedBox(height: 30),
+              // Campo de login
+              TextField(
+                controller: _usernameController,
+                decoration: InputDecoration(
+                  labelText: 'Login',
+                  labelStyle: const TextStyle(color: Colors.black),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.redAccent),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
               ),
-              title: Text('Climatização'),
-            ),
-            body: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: 20),
-                  Text(
-                    'Climatização',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
+              const SizedBox(height: 20),
+              // Campo de senha
+              TextField(
+                controller: _passwordController,
+                obscureText: true,
+                decoration: InputDecoration(
+                  labelText: 'Senha',
+                  labelStyle: const TextStyle(color: Colors.black),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Smaai5',
-                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.redAccent),
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Chave atual: $key',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                  Divider(),
-                  SizedBox(height: 20),
-                  Text(
-                    'Login da granja',
-                    style: TextStyle(fontSize: 18),
-                    textAlign: TextAlign.left,
-                  ),
-                  SizedBox(height: 10),
-                  TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Nome da granja',
-                      border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 30),
+              // Botão de login
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.redAccent,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  SizedBox(height: 10),
-                  TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Login',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: 'Senha',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red, // Button color as in the image
-                      ),
-                      onPressed: () {
-                        // Handle the login logic
-                      },
-                      child: Text('Próximo'),
-                    ),
-                  ),
-                ],
+                  onPressed: _isLoading ? null : _login,
+                  child: _isLoading
+                      ? const CircularProgressIndicator(
+                          color: Colors.white,
+                        )
+                      : const Text(
+                          'Próximo',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                          ),
+                        ),
+                ),
               ),
-            ),
-          );
-        }
-      },
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

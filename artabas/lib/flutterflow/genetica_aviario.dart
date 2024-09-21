@@ -5,6 +5,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,6 +16,8 @@ class MyApp extends StatelessWidget {
 }
 
 class AviaryBatchScreen extends StatelessWidget {
+  const AviaryBatchScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +25,7 @@ class AviaryBatchScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.red,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             // Handle back button press
           },
@@ -35,8 +39,8 @@ class AviaryBatchScreen extends StatelessWidget {
               Container(
                 color: Colors.red,
                 width: double.infinity,
-                padding: EdgeInsets.symmetric(vertical: 20.0),
-                child: Text(
+                padding: const EdgeInsets.symmetric(vertical: 20.0),
+                child: const Text(
                   'Adicione um lote\npara o aviário ', // Use actual identifier
                   style: TextStyle(
                     color: Colors.white,
@@ -47,25 +51,25 @@ class AviaryBatchScreen extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Aviário\n', // Use actual identifier
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Divider(thickness: 1),
-                    SizedBox(height: 10),
-                    Text(
+                    const Divider(thickness: 1),
+                    const SizedBox(height: 10),
+                    const Text(
                       'Genética',
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     CheckboxListTile(
-                      title: Text("Lohman"),
+                      title: const Text("Lohman"),
                       value: true,
                       onChanged: (newValue) {
                         // Handle checkbox change
@@ -73,7 +77,7 @@ class AviaryBatchScreen extends StatelessWidget {
                       controlAffinity: ListTileControlAffinity.leading,
                     ),
                     CheckboxListTile(
-                      title: Text("Lohman"),
+                      title: const Text("Lohman"),
                       value: true,
                       onChanged: (newValue) {
                         // Handle checkbox change
@@ -81,7 +85,7 @@ class AviaryBatchScreen extends StatelessWidget {
                       controlAffinity: ListTileControlAffinity.leading,
                     ),
                     CheckboxListTile(
-                      title: Text("Lohman"),
+                      title: const Text("Lohman"),
                       value: true,
                       onChanged: (newValue) {
                         // Handle checkbox change
@@ -92,41 +96,41 @@ class AviaryBatchScreen extends StatelessWidget {
                       onPressed: () {
                         // Handle add genetics action
                       },
-                      child: Text(
+                      child: const Text(
                         'Adicionar genética',
                         style: TextStyle(color: Colors.red),
                       ),
                     ),
-                    Divider(thickness: 1),
-                    SizedBox(height: 10),
-                    Text(
+                    const Divider(thickness: 1),
+                    const SizedBox(height: 10),
+                    const Text(
                       'Data e quantidade',
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 10),
-                    TextField(
+                    const SizedBox(height: 10),
+                    const TextField(
                       decoration: InputDecoration(
                         labelText: 'Data inicial',
                         border: OutlineInputBorder(),
                       ),
                     ),
-                    SizedBox(height: 10),
-                    TextField(
+                    const SizedBox(height: 10),
+                    const TextField(
                       decoration: InputDecoration(
                         labelText: 'Quantidade inicial',
                         border: OutlineInputBorder(),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
                         // Add your onPressed code here!
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.red,
-                        minimumSize: Size(double.infinity, 50),
+                        minimumSize: const Size(double.infinity, 50),
                       ),
-                      child: Text(
+                      child: const Text(
                         'Adicionar',
                         style: TextStyle(fontSize: 18),
                       ),

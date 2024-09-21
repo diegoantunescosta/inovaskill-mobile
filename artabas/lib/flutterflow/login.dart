@@ -8,6 +8,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,160 +19,212 @@ class MyApp extends StatelessWidget {
 }
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _controller = TextEditingController();
-  bool _isLoading = false; // Adiciona uma variável para controlar o estado de carregamento
+  bool _isLoading = false;
 
   // Função para enviar o número para a API
   Future<void> _sendNumber() async {
     setState(() {
-      _isLoading = true; // Inicia o carregamento
+      _isLoading = true;
     });
 
     final number = _controller.text;
-
-    // Adiciona o código do país (55) ao número
     final formattedNumber = '55$number';
 
-    // Verifica se o número não está vazio
     if (formattedNumber.isEmpty) {
-      // Exibe uma mensagem de erro se o número estiver vazio
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Por favor, insira um número de WhatsApp.')),
+        const SnackBar(content: Text('Por favor, insira um número de WhatsApp.')),
       );
       setState(() {
-        _isLoading = false; // Para o carregamento
+        _isLoading = false;
       });
       return;
     }
 
-    // Configuração da requisição
-    final url = Uri.parse('http://172.18.1.215:5000/add_number');
+    final url = Uri.parse('https://e2d9w1aprk.execute-api.us-east-1.amazonaws.com/dev/add_number');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'number': formattedNumber}),
     );
 
-    // Verifica a resposta
     if (response.statusCode == 200) {
-      // Sucesso
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Número enviado com sucesso!')),
+        const SnackBar(content: Text('Código enviado com sucesso!')),
       );
-      
-      // Navega para a próxima página
+
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => AuthenticZap()),
+        MaterialPageRoute(builder: (context) => AuthenticZap()), // Correção na navegação
       );
     } else {
-      // Erro
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Falha ao enviar o número.')),
+        const SnackBar(content: Text('Falha ao enviar o número.')),
       );
     }
 
     setState(() {
-      _isLoading = false; // Para o carregamento
+      _isLoading = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            // Logo
-            // Image.asset(
-            //   'image_3-sem fundo.png', // replace with your image asset path
-            //   height: 150,
-            // ),
-            // SizedBox(height: 20),
-
-            // Welcome Text
-            Container(
-              padding: EdgeInsets.all(20.0),
-              color: Colors.red,
-              child: Column(
-                children: [
-                  Text(
-                    'Bem-vindo',
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Insira seu número de WhatsApp para continuar',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 30),
-
-            // Login Label
-            Text(
-              'Login',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.black54,
-              ),
-            ),
-            SizedBox(height: 10),
-
-            // WhatsApp Number Input Field
-            TextField(
-              controller: _controller,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Número de WhatsApp',
-                hintText: 'Número de WhatsApp',
-                filled: true,
-                fillColor: Colors.white,
-              ),
-              keyboardType: TextInputType.phone,
-            ),
-            SizedBox(height: 20),
-
-            // Next Button
-            ElevatedButton(
-              onPressed: _isLoading ? null : _sendNumber, // Desativa o botão enquanto carrega
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-                padding: EdgeInsets.symmetric(vertical: 16),
-              ),
-              child: _isLoading
-                  ? CircularProgressIndicator(
-                      color: Colors.white,
-                    ) // Exibe o carregamento se estiver ativo
-                  : Text(
-                      'Próximo',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
+      backgroundColor: Colors.white,
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    // Logo
+                    Container(
+                      height: 150,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/image_3-sem fundo.png'),
+                          fit: BoxFit.contain,
+                        ),
                       ),
                     ),
+                    const SizedBox(height: 30),
+
+                    // Welcome Text
+                    Container(
+                      padding: const EdgeInsets.all(20.0),
+                      decoration: BoxDecoration(
+                        color: Colors.redAccent,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Column(
+                        children: [
+                          Text(
+                            'Bem-vindo',
+                            style: TextStyle(
+                              fontSize: 28,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'Insira seu número de WhatsApp para continuar',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.white70,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+
+                    // Login Label
+                    const Text(
+                      'Login',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+
+                    // WhatsApp Number Input Field
+                    TextField(
+                      controller: _controller,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        labelText: 'Número de WhatsApp',
+                        hintText: 'Número de WhatsApp',
+                        filled: true,
+                        fillColor: Colors.white,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.redAccent),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      keyboardType: TextInputType.phone,
+                    ),
+                    const SizedBox(height: 20),
+
+                    // Next Button
+                    ElevatedButton(
+                      onPressed: _isLoading ? null : _sendNumber,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.redAccent,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: _isLoading
+                          ? const CircularProgressIndicator(
+                              color: Colors.white,
+                            )
+                          : const Text(
+                              'Próximo',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                              ),
+                            ),
+                    ),
+                    const SizedBox(height: 70),
+
+                    // Parceria Section
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Column(
+                        children: [
+                          // Texto "Parceria"
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Parceria',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          // Imagem pequena
+                          SizedBox(
+                            height: 50,
+                            child: Image.asset(
+                              'assets/images/ciag.png', // Substitua pelo caminho da sua imagem
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
